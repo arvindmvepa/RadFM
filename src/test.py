@@ -25,22 +25,24 @@ setup_seed(20)
 
 @dataclass
 class ModelArguments:
-    lang_encoder_path: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/book_pretrain/Results/Book_mix_2048_13B_full/checkpoint-45800")
-    tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})   
+    lang_encoder_path: Optional[str] = field(default="chaoyi-wu/MedLLaMA_13B")
+    # tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})   
+    tokenizer_path: str = field(default="chaoyi-wu/MedLLaMA_13B", metadata={"help": "Path to the tokenizer data."})   
     #vision_encoder_path: str = field(default='/home/cs/leijiayu/wuchaoyi/multi_modal/src/PMC-CLIP/checkpoint.pt', metadata={"help": "Path to the vision_encoder."})   
     
 
 @dataclass
 class DataArguments:
     Mode: Optional[str] = field(default="Train")
-    test_split: Optional[str] = field(default="open")
+    test_split: Optional[str] = field(default="vqa")
     
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):
     remove_unused_columns: bool = field(default = False)
     batch_size_2D: int = field(default = 4)
     batch_size_3D: int = field(default = 1)
-    output_dir: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/multi_modal/src/Results/BLIP_overfit/")
+    # output_dir: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/multi_modal/src/Results/BLIP_overfit/")
+    output_dir: Optional[str] = field(default="./Quick_demo")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
 
@@ -118,7 +120,7 @@ def main():
     model = MultiLLaMAForCausalLM(
         lang_model_path=model_args.lang_encoder_path,
     )
-    ckpt = torch.load('/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/Results/backup/checkpoint-17600/pytorch_model.bin',map_location ='cpu')
+    ckpt = torch.load('/home/acc/NKG/RadFM-branch/RadFM/Quick_demo/pytorch_model.bin',map_location ='cpu')
     # ckpt.pop('embedding_layer.figure_token_weight')
     model.load_state_dict(ckpt,strict=False)
     model = model.to('cuda')

@@ -85,121 +85,121 @@ class multi_dataset(Dataset):
         self.test_split = test_split
         ### closed ###
         if self.test_split == 'diagnosis':
-            chestxray_dataset_bn = Binary_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/chestxray_balance_test.csv',  
+            chestxray_dataset_bn = Binary_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/chestxray_balance_test.csv',  
                                 prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/yes_no_prompt.json')
             self.dataset_reflect['chestxray_dataset_bn'] = chestxray_dataset_bn
             self.data_whole_2D = self.data_whole_2D +  [{'chestxray_dataset_bn':i} for i in range(len(chestxray_dataset_bn))]
             print('chestxray_dataset_bn loaded')
             
-            pcxr_dataset_bn = Binary_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/pcxr_balance_test.csv',  
+            pcxr_dataset_bn = Binary_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/pcxr_balance_test.csv',  
                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/yes_no_prompt.json')
             self.dataset_reflect['pcxr_dataset_bn'] = pcxr_dataset_bn
             self.data_whole_2D = self.data_whole_2D +  [{'pcxr_dataset_bn':i} for i in range(len(pcxr_dataset_bn))]
             print('pcxr_dataset_bn loaded')
             
-            mammo_dataset_bn = Binary_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/mammo_balance_test.csv',  
+            mammo_dataset_bn = Binary_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/mammo_balance_test.csv',  
                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/yes_no_prompt.json')
             self.dataset_reflect['mammo_dataset_bn'] = mammo_dataset_bn
             self.data_whole_2D = self.data_whole_2D +  [{'mammo_dataset_bn':i} for i in range(len(mammo_dataset_bn))]
             print('mammo_dataset_bn loaded')
             
-            spinexr_dataset_bn = Binary_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/spinexr_balance_test.csv',  
+            spinexr_dataset_bn = Binary_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/spinexr_balance_test.csv',  
                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/yes_no_prompt.json')
             self.dataset_reflect['spinexr_dataset_bn'] = spinexr_dataset_bn
             self.data_whole_2D = self.data_whole_2D +  [{'spinexr_dataset_bn':i} for i in range(len(spinexr_dataset_bn))]
             print('spinexr_dataset_bn loaded')
             
             ### multi-label ###
-            chestxray_dataset = ChestXray_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/chestxray_test.csv',  
+            chestxray_dataset = ChestXray_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/chestxray_test.csv',  
                                 prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/cls_prompt.json')
             self.dataset_reflect['chestxray_dataset'] = chestxray_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'chestxray_dataset':i} for i in range(len(chestxray_dataset))]
             print('chestxray_dataset loaded')
             
-            pcxr_dataset = ChestXray_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/pcxr_test.csv',  
+            pcxr_dataset = ChestXray_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/pcxr_test.csv',  
                                 prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/cls_prompt.json')
             self.dataset_reflect['pcxr_dataset'] = pcxr_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'pcxr_dataset':i} for i in range(len(pcxr_dataset))]
             print('pcxr_dataset loaded')
             
-            mammo_dataset = ChestXray_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/mammo_test.csv',  
+            mammo_dataset = ChestXray_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/mammo_test.csv',  
                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/mammo_prompt.json')
             self.dataset_reflect['mammo_dataset'] = mammo_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'mammo_dataset':i} for i in range(len(mammo_dataset))]
             print('mammo_dataset loaded')
             
-            spinexr_dataset = ChestXray_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/spinexr_test.csv',  
+            spinexr_dataset = ChestXray_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/spinexr_test.csv',  
                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/spinexr_prompt.json')
             self.dataset_reflect['spinexr_dataset'] = spinexr_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'spinexr_dataset':i} for i in range(len(spinexr_dataset))]
             print('spinexr_dataset loaded')
             
         if self.test_split == 'modality':
-            radiomodality_dataset = Radio_Modality_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/radio_modality_test.csv',  
+            radiomodality_dataset = Radio_Modality_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/radio_modality_test.csv',  
                                 prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/modality_prompt.json',
-                                modality_json_file = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/modality_set.json',down_sample_ratio = 1)
+                                modality_json_file = '/local2/acc/NKG/RadFM/data_csv/modality_set.json',down_sample_ratio = 1)
             self.dataset_reflect['radiomodality_dataset'] = radiomodality_dataset
             self.data_whole_3D = self.data_whole_3D +  [{'radiomodality_dataset':i} for i in range(len(radiomodality_dataset))]
             print('radiomodality_dataset loaded')
             
-            # medpix_single_dataset = MedPix_Single_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/MedPix_single_test_close.csv')
+            # medpix_single_dataset = MedPix_Single_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/MedPix_single_test_close.csv')
             # self.dataset_reflect['medpix_single_dataset'] = medpix_single_dataset
             # self.data_whole_2D = self.data_whole_2D +  [{'medpix_single_dataset':i} for i in range(len(medpix_single_dataset))]
             # print('medpix_single_dataset loaded')
             
         if self.test_split == 'vqa':
             
-            # medpix_qa_dataset = MedPix_QA_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/MedPix_questions_test.csv')
+            # medpix_qa_dataset = MedPix_QA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/MedPix_questions_test.csv')
             # self.dataset_reflect['medpix_qa_dataset'] = medpix_qa_dataset
             # self.data_whole_2D = self.data_whole_2D +  [{'medpix_qa_dataset':i} for i in range(len(medpix_qa_dataset))]
             # print('medpix_qa_dataset loaded')
             
-            pmcvqa_dataset = VQA_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/pmcvqa_test.csv')
+            pmcvqa_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/pmcvqa_test.csv')
             self.dataset_reflect['pmcvqa_dataset'] = pmcvqa_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'pmcvqa_dataset':i} for i in range(len(pmcvqa_dataset))]
             print('pmcvqa_dataset loaded')
             
-            casereport_dataset = CaseReport_dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/filtered_case_report_test.csv',    
+            casereport_dataset = CaseReport_dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/filtered_case_report_test.csv',    
                                     img_path = '/home/cs/leijiayu/data/all_images/figures/')
             self.dataset_reflect['casereport_dataset'] = casereport_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'casereport_dataset':i} for i in range(len(casereport_dataset))]
             print('casereport_dataset loaded')
             
-            vqarad_dataset = VQA_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/vqarad_test.csv')
+            vqarad_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/vqarad_test.csv')
             self.dataset_reflect['vqarad_dataset'] = vqarad_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'vqarad_dataset':i} for i in range(len(vqarad_dataset))]
             print('vqarad_dataset loaded')
             
-            slake_dataset = VQA_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/slakevqa_test.csv')
+            slake_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/slakevqa_test.csv')
             self.dataset_reflect['slake_dataset'] = slake_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'slake_dataset':i} for i in range(len(slake_dataset))]
             print('slake_dataset loaded')
             
             ## 3D
-            radiovqa_dataset = RadioVQA_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/radiology_vqa_test.csv')
+            radiovqa_dataset = RadioVQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/radiology_vqa_test.csv')
             self.dataset_reflect['radiovqa_dataset'] = radiovqa_dataset
             self.data_whole_3D = self.data_whole_3D +  [{'radiovqa_dataset':i} for i in range(len(radiovqa_dataset))]
             print('radiovqa_dataset loaded')
         
         if self.test_split == 'caption':
             ## open ###
-            # medpix_multi_dataset = MedPix_Multi_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/MedPix_multi_test.csv')
+            # medpix_multi_dataset = MedPix_Multi_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/MedPix_multi_test.csv')
             # self.dataset_reflect['medpix_multi_dataset'] = medpix_multi_dataset
             # self.data_whole_2D = self.data_whole_2D +  [{'medpix_multi_dataset':i} for i in range(len(medpix_multi_dataset))]
             # print('medpix_multi_dataset loaded')
             
-            chestxray_caption_dataset = ChestXray_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/mimic_caption_test.csv',  
+            chestxray_caption_dataset = ChestXray_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/mimic_caption_test.csv',  
                                 prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/report_prompt.json')
             self.dataset_reflect['chestxray_caption_dataset'] = chestxray_caption_dataset
             self.data_whole_2D = self.data_whole_2D +  [{'chestxray_caption_dataset':i} for i in range(len(chestxray_caption_dataset))]
             print('chestxray_caption_dataset loaded')
             
-            # medpix_single_dataset = MedPix_Single_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/MedPix_single_test.csv')
+            # medpix_single_dataset = MedPix_Single_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/MedPix_single_test.csv')
             # self.dataset_reflect['medpix_single_dataset'] = medpix_single_dataset
             # self.data_whole_2D = self.data_whole_2D +  [{'medpix_single_dataset':i} for i in range(len(medpix_single_dataset))]
             # print('medpix_single_dataset loaded')
 
-            radiocaption_dataset = RadioCaption_Dataset(json_path='/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/radiology_article_npy_test.json',
+            radiocaption_dataset = RadioCaption_Dataset(json_path='/local2/acc/NKG/RadFM/data_csv/radiology_article_npy_test.json',
                                                         prompt_json_file = '/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/caption_prompt.json'
                                                         )
             self.dataset_reflect['radiocaption_dataset'] = radiocaption_dataset
@@ -207,10 +207,10 @@ class multi_dataset(Dataset):
             print('radiocaption_dataset loaded')
             
         if self.test_split == 'feature':    
-            radiofeatures_dataset = Radiofeatures_Dataset(json_path='/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/radiology_article_npy_test.json',
+            radiofeatures_dataset = Radiofeatures_Dataset(json_path='/local2/acc/NKG/RadFM/data_csv/radiology_article_npy_test.json',
                                                     prompt_json_file = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/radiology_feature_prompt.json',
                                                     disease_prompt_json_file = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/dataset/yes_no_prompt.json',
-                                                    article_json_file = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/articles_resave.json')
+                                                    article_json_file = '/local2/acc/NKG/RadFM/data_csv/articles_resave.json')
             self.dataset_reflect['radiofeatures_dataset'] = radiofeatures_dataset
             self.data_whole_3D = self.data_whole_3D +  [{'radiofeatures_dataset':i} for i in range(len(radiofeatures_dataset))]
             print('radiofeatures_dataset loaded')

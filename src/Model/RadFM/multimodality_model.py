@@ -11,9 +11,7 @@ import numpy as np
 class MultiLLaMAForCausalLM(nn.Module):
     def __init__(self, lang_model_path):  
         super(MultiLLaMAForCausalLM, self).__init__()  
-        self.lang_model = LlamaForCausalLM.from_pretrained(
-            lang_model_path,
-        )
+        self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
         self.lang_model.gradient_checkpointing_enable()
         self.lang_model.enable_input_require_grads()
         # self.lang_model.requires_grad_(False)
