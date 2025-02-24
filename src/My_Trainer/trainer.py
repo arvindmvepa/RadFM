@@ -117,7 +117,7 @@ from transformers.trainer_utils import (
     IntervalStrategy,
     PredictionOutput,
     RemoveColumnsCollator,
-    ShardedDDPOption,
+    #ShardedDDPOption,
     TrainerMemoryTracker,
     TrainOutput,
     default_compute_objective,
