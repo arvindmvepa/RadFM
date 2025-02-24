@@ -8,10 +8,28 @@ import torch
 from torch.utils.checkpoint import checkpoint
 from torch.autograd import Variable
 import numpy as np
+from peft import (
+    LoraConfig,
+    get_peft_model,
+)
+
+
 class MultiLLaMAForCausalLM(nn.Module):
-    def __init__(self, lang_model_path):  
+    def __init__(self, lang_model_path, r=16, lora_alpha=32,
+                 target_modules=("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"),
+                 lora_dropout = 0.1, bias="none",  task_type="CAUSAL_LM"):
         super(MultiLLaMAForCausalLM, self).__init__()
         self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
+        if r:
+            config = LoraConfig(
+                r=r,
+                lora_alpha=lora_alpha,
+                target_modules=target_modules,
+                lora_dropout=lora_dropout,
+                bias=bias,
+                task_type=task_type,
+            )
+            self.lang_model = get_peft_model(self.lang_model, config)
         self.lang_model.gradient_checkpointing_enable()
         self.lang_model.enable_input_require_grads()
         # self.lang_model.requires_grad_(False)
