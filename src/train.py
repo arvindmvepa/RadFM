@@ -3,7 +3,8 @@ import torch.nn.functional as F
 from typing import Optional, Dict, Sequence
 from typing import List, Optional, Tuple, Union
 import transformers
-from My_Trainer.trainer import Trainer
+#from My_Trainer.trainer import Trainer
+from transformers import Trainer
 from dataclasses import dataclass, field
 from Dataset.multi_dataset import multi_dataset
 from Model.RadFM.multimodality_model import MultiLLaMAForCausalLM
@@ -110,11 +111,11 @@ def main():
     )
     
     trainer = Trainer(model=model, 
-                      train_dataset = Train_dataset, 
-                      eval_dataset = Eval_dataset,
-                      args = training_args,
-                      data_collator = DataCollator(),
-                      compute_metrics= compute_metrics
+                      train_dataset=Train_dataset,
+                      eval_dataset=Eval_dataset,
+                      args=training_args,
+                      data_collator=DataCollator(),
+                      compute_metrics=compute_metrics
                       )
 
     trainer.train()
