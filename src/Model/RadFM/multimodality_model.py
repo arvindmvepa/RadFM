@@ -49,12 +49,8 @@ class MultiLLaMAForCausalLM(nn.Module):
             # lang_x = lang_x + torch.zeros(1, dtype=lang_x.dtype, device=lang_x.device, requires_grad=True)
             # vision_x = vision_x + torch.zeros(1, dtype=vision_x.dtype, device=vision_x.device, requires_grad=True) 
             # input_embedding = checkpoint(self.embedding_layer, lang_x, vision_x)
-            print("lang_x",lang_x)
-            print("vision_x",vision_x)
-            print("key_words_query",key_words_query)
             input_embedding,loss_match= self.embedding_layer(lang_x, vision_x,key_words_query)   # ,loss_matching
             output = self.lang_model(inputs_embeds = input_embedding,attention_mask = attention_mask, labels = labels)
-            print("output",output)
             logits = output['logits']
 
             loss_reg = None
@@ -70,7 +66,9 @@ class MultiLLaMAForCausalLM(nn.Module):
                 shift_loss_reweight = shift_loss_reweight.view(-1)
                 # Enable model parallelism
                 shift_labels = shift_labels.to(shift_logits.device)
-                shift_loss_reweight = shift_loss_reweight.to(shift_logits.device) 
+                shift_loss_reweight = shift_loss_reweight.to(shift_logits.device)
+                print("shift_logits.shape,shift_labels.shape,shift_loss_reweight.shape")
+                print(shift_logits.shape,shift_labels.shape,shift_loss_reweight.shape)
                 loss_reg = loss_fct(shift_logits, shift_labels)
                 loss_reg = torch.sum(shift_loss_reweight*loss_reg)/torch.sum(shift_loss_reweight)
             loss = loss_reg
