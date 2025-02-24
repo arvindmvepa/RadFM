@@ -137,20 +137,21 @@ def main():
             question = sample["question"]
             belong_to = sample['belong_to']
             # img_pp = sample['img_path']
-            lang_x = Test_dataset.text_tokenizer(
-                question, max_length=2048, truncation=True, return_tensors="pt"
-            )['input_ids'].to('cuda')
-            vision_x = sample["vision_x"].to('cuda')
-            answer = sample['answer']
-            try:
+
+            with torch.cuda.amp.autocast(dtype=torch.float16):
+                lang_x = Test_dataset.text_tokenizer(
+                    question, max_length=2048, truncation=True, return_tensors="pt"
+                )['input_ids'].to('cuda:6')
+                vision_x = sample["vision_x"].to('cuda:6')
+                answer = sample['answer']
+                
                 generation = model.generate(lang_x,vision_x)
                 generated_texts = Test_dataset.text_tokenizer.batch_decode(generation, skip_special_tokens=True) 
                 writer.writerow([question,answer,generated_texts,belong_to])
                 cc = cc+1
-            # if cc>=10000:
-            #     break
-            except:
-                continue
+                # if cc>=10000:
+                #     break
+              
 
 if __name__ == "__main__":
     main()
