@@ -1571,6 +1571,7 @@ class Trainer:
             model = nn.parallel.DistributedDataParallel(
                 model, device_ids=[int(os.getenv("SMDATAPARALLEL_LOCAL_RANK"))]
             )
+        """
         elif self.args.local_rank != -1:
             kwargs = {}
             if self.args.ddp_find_unused_parameters is not None:
@@ -1597,6 +1598,7 @@ class Trainer:
         # to ensure that it accounts for the graph breaks required by those wrappers
         if self.args.torch_compile:
             model = torch.compile(model, backend=self.args.torch_compile_backend, mode=self.args.torch_compile_mode)
+        """
 
         return model
 
