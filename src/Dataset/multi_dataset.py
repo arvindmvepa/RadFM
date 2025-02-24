@@ -287,6 +287,7 @@ class multi_dataset(Dataset):
         try:
             vision_x = stack_images(images)
         except:
+            print("Error")
             print(self.data_whole[idx].items())
         #print(vision_x.shape,question,answer)
         
