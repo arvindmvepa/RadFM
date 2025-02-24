@@ -213,13 +213,13 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
             "answer": answer,
             }
 
-    def prepare_image(self, data):
+    def prepare_image(self, data, depth=4):
         image_abs_path = data["volume_non_seg_files"][self.included_modality]
         new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
         image = np.load(new_image_abs_path)
         image = (image-image.min())/(image.max()-image.min())
-        c, _, h, w = image.shape
-        image = ndimage.zoom(image, (3/c, 512/h, 512/w, 1), order=0)
+        c, d, h, w = image.shape
+        image = ndimage.zoom(image, (3/c, 512/h, 512/w, depth/d), order=0)
         image = np.transpose(image, (0, 2, 3, 1))
         image = torch.from_numpy(image).float()
         return image
