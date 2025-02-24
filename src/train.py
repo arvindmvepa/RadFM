@@ -3,8 +3,8 @@ import torch.nn.functional as F
 from typing import Optional, Dict, Sequence
 from typing import List, Optional, Tuple, Union
 import transformers
-#from My_Trainer.trainer import Trainer
-from transformers import Trainer
+from My_Trainer.trainer import Trainer
+#from transformers import Trainer
 from dataclasses import dataclass, field
 from Dataset.multi_dataset import multi_dataset
 from Model.RadFM.multimodality_model import MultiLLaMAForCausalLM
