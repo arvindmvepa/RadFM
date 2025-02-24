@@ -407,6 +407,7 @@ class Trainer:
 
         # Setup Sharded DDP training
         self.sharded_ddp = None
+        self.fsdp = None
         """
         if len(args.sharded_ddp) > 0:
             if args.deepspeed:
