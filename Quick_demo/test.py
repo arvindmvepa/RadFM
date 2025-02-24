@@ -101,16 +101,21 @@ def main():
     ckpt = torch.load('./pytorch_model.bin',map_location ='cpu') # Please dowloud our checkpoint from huggingface and Decompress the original zip file first
     model.load_state_dict(ckpt)
     print("Finish loading model")
+    model = model.half()  # Convert model parameters to FP16
+
     
-    model = model.to('cuda')
+    model = model.to('cuda:6')
     model.eval() 
     with torch.no_grad():
-        lang_x = text_tokenizer(
+        # Use autocast for mixed precision inference
+        with torch.cuda.amp.autocast(dtype=torch.float16):
+            lang_x = text_tokenizer(
                 text, max_length=2048, truncation=True, return_tensors="pt"
-        )['input_ids'].to('cuda')
-        
-        vision_x = vision_x.to('cuda')
-        generation = model.generate(lang_x,vision_x)
+            )['input_ids'].to('cuda:6')
+            
+            vision_x = vision_x.to('cuda:6')
+            generation = model.generate(lang_x, vision_x)
+            
         generated_texts = text_tokenizer.batch_decode(generation, skip_special_tokens=True) 
         print('---------------------------------------------------')
         print('Input: ', question)
