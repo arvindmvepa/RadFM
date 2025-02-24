@@ -58,6 +58,7 @@ class MultiLLaMAForCausalLM(nn.Module):
             if labels is not None:
                 shift_logits = logits[..., :-1, :].contiguous()  # shape [B, seq_len-1, vocab_size]
                 shift_labels = labels[..., 1:].contiguous()  # shape [B, seq_len-1]
+                shift_loss_reweight = loss_reweight[..., 1:].contiguous()
                 # Flatten across the batch and sequence-length dims
                 shift_logits = shift_logits.view(-1, shift_logits.size(-1))
                 shift_labels = shift_labels.view(-1)
