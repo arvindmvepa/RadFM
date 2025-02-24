@@ -127,6 +127,7 @@ class multi_dataset(Dataset):
         
         ### sft ###
         ### medpix ###
+        """
         medpix_multi_dataset = MedPix_Multi_Dataset(csv_path = '/gpfs/home/cs/leijiayu/wuchaoyi/wangyingjie/src/New_Dataset/data_csv/MedPix_multi_train.csv')
         self.dataset_reflect['medpix_multi_dataset'] = medpix_multi_dataset
         self.data_whole_2D = self.data_whole_2D +  [{'medpix_multi_dataset':i} for i in range(len(medpix_multi_dataset))]
@@ -248,9 +249,11 @@ class multi_dataset(Dataset):
         self.dataset_reflect['radiofeatures_dataset'] = radiofeatures_dataset
         self.data_whole_3D = self.data_whole_3D +  [{'radiofeatures_dataset':i} for i in range(len(radiofeatures_dataset))]
         print('radiofeatures_dataset loaded')
-        
-        
-
+        """
+        brats_radiovqa_dataset = Brats3D_RadioVQA_Dataset(csv_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_train_v3.json')
+        self.dataset_reflect['brats_radiovqa_dataset'] = brats_radiovqa_dataset
+        self.data_whole_3D = self.data_whole_3D +  [{'brats_radiovqa_dataset':i} for i in range(len(brats_radiovqa_dataset))]
+        print('brats_radiovqa_dataset loaded')
 
         self.data_whole = self.data_whole_2D + self.data_whole_3D
         

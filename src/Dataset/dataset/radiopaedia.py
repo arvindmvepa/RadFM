@@ -183,6 +183,61 @@ class RadioVQA_Dataset(Dataset):
             "answer":answer,
             }
 
+
+class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
+
+    def __init__(self, data_path, included_modality="t1c"):
+
+        self.data = self.get_question_data(data_path)
+        self.included_modality = included_modality
+
+    def __getitem__(self, index):
+        data = self.data[idx]
+        image = self.prepare_image(data)
+        answer = data['answer']
+        question = data['question']
+        dict_idx = {
+            "image": image,
+            "position": {
+                "question": 0
+            }
+        }
+        image_dict = []
+        image_dict.append(dict_idx)
+        return {
+            "image_dict": image_dict,
+            "question": question,
+            "answer": answer,
+            }
+
+    def prepare_image(self, data):
+        image_abs_path = data["volume_non_seg_files"][self.included_modality]
+        new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
+        image = np.load(new_image_abs_path)
+        image = (image-image.min())/(image.max()-image.min())
+        c, _, h, w = image.shape
+        image = ndimage.zoom(image, (3/c, 512/h, 512/w, 1), order=0)
+        image = np.transpose(image, (0, 2, 3, 1))
+        image = torch.from_numpy(image).float()
+        return image
+
+    def convert_file_path_to_npy(self, image_abs_path):
+        volume_abs_dir = os.path.dirname(image_abs_path)
+        base_dir = os.path.dirname(volume_abs_dir)
+        new_base_dir = base_dir + "_npy"
+
+        volume_dir = os.path.basename(volume_abs_dir)
+        image_file = os.path.basename(image_abs_path)
+        new_image_abs_path = os.path.join(new_base_dir, volume_dir, image_file + ".npy")
+        return new_image_abs_path
+
+    def get_question_data(self, data_path, image_header="In question: "):
+        with open(data_path, "r") as f:
+            questions = json.load(f)
+        questions = [q for q in questions if q['q_lang'] == "en" and q['img_name'] is not None]
+
+        return questions
+
 class RadioCaption_Dataset(Dataset):
     def __init__(self,json_path,prompt_json_file):
         with open(json_path, 'r') as file:

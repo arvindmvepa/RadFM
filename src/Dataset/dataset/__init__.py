@@ -1,4 +1,4 @@
-from .radiopaedia import RadioVQA_Dataset,Radio_Modality_Dataset,Radiofeatures_Dataset,RadioCaption_Dataset
+from .radiopaedia import RadioVQA_Dataset,Radio_Modality_Dataset,Radiofeatures_Dataset,RadioCaption_Dataset, Brats3D_RadioVQA_Dataset
 from .binary import Binary_Dataset
 from .chestxray import ChestXray_Dataset
 from .vqa import VQA_Dataset

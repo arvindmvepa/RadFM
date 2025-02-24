@@ -22,8 +22,8 @@ def compute_metrics(eval_preds):
 
 @dataclass
 class ModelArguments:
-    lang_encoder_path: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/book_pretrain/Results/Book_mix_2048_13B_full/checkpoint-45800")
-    tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})   
+    lang_encoder_path: Optional[str] = field(default="microsoft/Phi-3-mini-4k-instruct")
+    tokenizer_path: str = field(default='microsoft/Phi-3-mini-4k-instruct', metadata={"help": "Path to the tokenizer data."})
     
     
 
@@ -36,7 +36,7 @@ class TrainingArguments(transformers.TrainingArguments):
     remove_unused_columns: bool = field(default = False)
     batch_size_2D: int = field(default = 4)
     batch_size_3D: int = field(default = 1)
-    output_dir: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/multi_modal/src/Results/BLIP_overfit/")
+    output_dir: Optional[str] = field(default="./BLIP_overfit/")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
 
