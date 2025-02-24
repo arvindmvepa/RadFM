@@ -191,6 +191,9 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
         self.data = self.get_question_data(data_path)
         self.included_modality = included_modality
 
+    def __len__(self):
+        return len(self.data)
+
     def __getitem__(self, index):
         data = self.data[idx]
         image = self.prepare_image(data)
