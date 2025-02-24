@@ -15,7 +15,7 @@ import random
 from transformers import AutoTokenizer, AutoModel
 
 class MyEmbedding(nn.Module):
-    def __init__(self, num_embeddings=32000, embedding_dim=5120, perceiver_num=32,vis_dim = 768, patch_size=32, frame_patch_size = 4 ,seg_channel = 256):
+    def __init__(self, num_embeddings=32000, embedding_dim=3072, perceiver_num=32,vis_dim = 768, patch_size=32, frame_patch_size = 4 ,seg_channel = 256):
         super().__init__()
         self.num_embeddings = num_embeddings
         self.embedding_dim = embedding_dim

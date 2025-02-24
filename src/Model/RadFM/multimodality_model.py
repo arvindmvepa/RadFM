@@ -39,7 +39,7 @@ class MultiLLaMAForCausalLM(nn.Module):
         # self.lang_model.requires_grad_(False)
         self.embedding_layer = MyEmbedding()
         self.embedding_layer.weight = self.lang_model.get_input_embeddings().weight
-        self.hidden_dim = 5120
+        self.hidden_dim = 3072
         self.voc_size = 32000
         
     def forward(self,lang_x, vision_x, attention_mask, labels, loss_reweight,key_words_query):
