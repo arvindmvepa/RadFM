@@ -123,7 +123,10 @@ def main():
     ckpt = torch.load('/home/acc/NKG/RadFM-branch/RadFM/Quick_demo/pytorch_model.bin',map_location ='cpu')
     # ckpt.pop('embedding_layer.figure_token_weight')
     model.load_state_dict(ckpt,strict=False)
-    model = model.to('cuda')
+    model = model.half()  # Convert model parameters to FP16
+
+    model = model.to('cuda:6')
+
     model.eval() 
     with open('output_whole_2_epoch' + data_args.test_split+'.csv', mode='w') as outfile:
         writer = csv.writer(outfile)
