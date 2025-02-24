@@ -15,7 +15,7 @@ from peft import (
 
 
 class MultiLLaMAForCausalLM(nn.Module):
-    def __init__(self, lang_model_path, r=16, lora_alpha=32,
+    def __init__(self, lang_model_path, r=8, lora_alpha=16,
                  target_modules=("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"),
                  lora_dropout = 0.1, bias="none",  task_type="CAUSAL_LM"):
         super(MultiLLaMAForCausalLM, self).__init__()
