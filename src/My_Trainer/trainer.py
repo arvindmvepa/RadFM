@@ -41,7 +41,7 @@ from transformers.integrations import (
     #default_hp_search_backend,
     get_reporting_integration_callbacks,
     hp_params,
-    is_fairscale_available,
+    #is_fairscale_available,
     is_optuna_available,
     is_ray_tune_available,
     is_sigopt_available,
@@ -180,7 +180,7 @@ if is_torch_tpu_available(check_device=False):
     import torch_xla.debug.metrics as met
     import torch_xla.distributed.parallel_loader as pl
 
-if is_fairscale_available():
+if True:
     dep_version_check("fairscale")
     import fairscale
     from fairscale.nn.data_parallel import FullyShardedDataParallel as FullyShardedDDP
