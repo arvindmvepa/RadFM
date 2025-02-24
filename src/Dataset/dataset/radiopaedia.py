@@ -213,7 +213,7 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
             "answer": answer,
             }
 
-    def prepare_image(self, data, depth=4):
+    def prepare_image(self, data, depth=32):
         image_abs_path = data["volume_non_seg_files"][self.included_modality]
         new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
         image = np.load(new_image_abs_path)

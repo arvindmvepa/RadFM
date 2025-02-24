@@ -75,7 +75,7 @@ def stack_images(images):
 
 
 class multi_dataset(Dataset):
-    def __init__(self, text_tokenizer, max_seq = 2048, max_img_size = 100, image_num=32,voc_size =32000):
+    def __init__(self, text_tokenizer, max_seq = 512, max_img_size = 100, image_num=32,voc_size =32000):
         
         self.text_tokenizer = text_tokenizer
         self.max_img_size = max_img_size
