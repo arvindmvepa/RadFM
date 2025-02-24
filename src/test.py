@@ -25,9 +25,9 @@ setup_seed(20)
 
 @dataclass
 class ModelArguments:
-    lang_encoder_path: Optional[str] = field(default="chaoyi-wu/MedLLaMA_13B")
+    lang_encoder_path: Optional[str] = field(default="meta-llama/Llama-2-7b-hf")
     # tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})   
-    tokenizer_path: str = field(default="chaoyi-wu/MedLLaMA_13B", metadata={"help": "Path to the tokenizer data."})   
+    tokenizer_path: str = field(default="meta-llama/Llama-2-7b-hf", metadata={"help": "Path to the tokenizer data."})   
     #vision_encoder_path: str = field(default='/home/cs/leijiayu/wuchaoyi/multi_modal/src/PMC-CLIP/checkpoint.pt', metadata={"help": "Path to the vision_encoder."})   
     
 

@@ -1,5 +1,6 @@
 from torch import nn
 from transformers.models.llama import LlamaForCausalLM
+from transformers import AutoModelForCausalLM
 from .my_embedding_layer import MyEmbedding
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 import tqdm.auto as tqdm
@@ -12,6 +13,12 @@ class MultiLLaMAForCausalLM(nn.Module):
     def __init__(self, lang_model_path):  
         super(MultiLLaMAForCausalLM, self).__init__()  
         self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
+        # self.lang_model = AutoModelForCausalLM.from_pretrained( 
+        #     "microsoft/Phi-3-mini-4k-instruct",  
+        #     device_map="cuda",  
+        #     torch_dtype="auto",  
+        #     trust_remote_code=True,  
+        # ) 
         self.lang_model.gradient_checkpointing_enable()
         self.lang_model.enable_input_require_grads()
         # self.lang_model.requires_grad_(False)

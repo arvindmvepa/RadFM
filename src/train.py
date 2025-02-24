@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from Dataset.multi_dataset import multi_dataset
 from Model.RadFM.multimodality_model import MultiLLaMAForCausalLM
 from datasampler import My_DistributedBatchSampler
-from datasets import load_metric
+# from datasets import load_metric
 from Dataset.multi_dataset_test_for_close import multi_dataset_close
 import numpy as np
 import torch
@@ -22,8 +22,8 @@ def compute_metrics(eval_preds):
 
 @dataclass
 class ModelArguments:
-    lang_encoder_path: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/book_pretrain/Results/Book_mix_2048_13B_full/checkpoint-45800")
-    tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})   
+    lang_encoder_path: Optional[str] = field(default="meta-llama/Llama-2-7b-hf")
+    tokenizer_path: str = field(default='meta-llama/Llama-2-7b-hf', metadata={"help": "Path to the tokenizer data."})   
     
     
 
@@ -36,7 +36,7 @@ class TrainingArguments(transformers.TrainingArguments):
     remove_unused_columns: bool = field(default = False)
     batch_size_2D: int = field(default = 4)
     batch_size_3D: int = field(default = 1)
-    output_dir: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/multi_modal/src/Results/BLIP_overfit/")
+    output_dir: Optional[str] = field(default="./Quick_demo")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
 
@@ -106,7 +106,7 @@ def main():
     print("Setup Model")
 
     model = MultiLLaMAForCausalLM(
-        lang_model_path=model_args.lang_encoder_path,
+        lang_model_path=model_args.lang_encoder_path
     )
     
     trainer = Trainer(model=model, 
