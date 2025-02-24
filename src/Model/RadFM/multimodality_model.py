@@ -8,6 +8,7 @@ import torch
 from torch.utils.checkpoint import checkpoint
 from torch.autograd import Variable
 import numpy as np
+from transformers import AutoModelForCausalLM
 from peft import (
     LoraConfig,
     get_peft_model,
@@ -19,7 +20,10 @@ class MultiLLaMAForCausalLM(nn.Module):
                  target_modules=("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"),
                  lora_dropout = 0.1, bias="none",  task_type="CAUSAL_LM"):
         super(MultiLLaMAForCausalLM, self).__init__()
-        self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
+        if "llama" in lang_model_path.lower():
+            self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
+        else:
+            self.lang_model = AutoModelForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
         if r:
             config = LoraConfig(
                 r=r,

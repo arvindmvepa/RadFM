@@ -22,7 +22,7 @@ def compute_metrics(eval_preds):
 
 @dataclass
 class ModelArguments:
-    lang_encoder_path: Optional[str] = field(default="meta-llama/Llama-2-7b-hf")
+    lang_encoder_path: Optional[str] = field(default="microsoft/Phi-3-mini-4k-instruct")
     tokenizer_path: str = field(default='microsoft/Phi-3-mini-4k-instruct', metadata={"help": "Path to the tokenizer data."})
     
     
