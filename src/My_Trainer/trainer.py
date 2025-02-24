@@ -181,7 +181,7 @@ if is_torch_tpu_available(check_device=False):
     import torch_xla.distributed.parallel_loader as pl
 
 if True:
-    dep_version_check("fairscale")
+    #dep_version_check("fairscale")
     import fairscale
     from fairscale.nn.data_parallel import FullyShardedDataParallel as FullyShardedDDP
     from fairscale.nn.data_parallel import ShardedDataParallel as ShardedDDP
