@@ -232,10 +232,8 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
         return new_image_abs_path
 
     def get_question_data(self, data_path, image_header="In question: "):
-        with open(data_path, "r") as f:
+        with open(data_path, 'r') as f:
             questions = json.load(f)
-        questions = [q for q in questions if q['q_lang'] == "en" and q['img_name'] is not None]
-
         return questions
 
 class RadioCaption_Dataset(Dataset):
