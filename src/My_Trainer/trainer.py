@@ -38,7 +38,7 @@ from tqdm.auto import tqdm
 # Integrations must be imported before ML frameworks:
 # isort: off
 from transformers.integrations import (
-    default_hp_search_backend,
+    #default_hp_search_backend,
     get_reporting_integration_callbacks,
     hp_params,
     is_fairscale_available,
