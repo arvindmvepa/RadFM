@@ -407,6 +407,7 @@ class Trainer:
 
         # Setup Sharded DDP training
         self.sharded_ddp = None
+        """
         if len(args.sharded_ddp) > 0:
             if args.deepspeed:
                 raise ValueError(
@@ -469,7 +470,7 @@ class Trainer:
             self.limit_all_gathers = False
             if self.args.fsdp_config.get("limit_all_gathers", False):
                 self.limit_all_gathers = True
-
+        """
         # one place to sort out whether to place the model on device or not
         # postpone switching model to cuda when:
         # 1. MP - since we are trying to fit a much bigger than 1 gpu model
