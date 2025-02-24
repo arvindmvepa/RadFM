@@ -85,7 +85,7 @@ class DataCollator(object):
         vision_xs = torch.nn.utils.rnn.pad_sequence(
             vision_xs, batch_first=True, padding_value=0
         )
-        print(vision_xs.shape,vision_xs.dtype)
+        print(vision_xs.shape,vision_xs.dtype, np.mean(vision_xs))
         return dict(
             lang_x=lang_xs,
             vision_x=vision_xs,
