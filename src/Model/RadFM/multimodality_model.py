@@ -16,7 +16,7 @@ from peft import (
 
 
 class MultiLLaMAForCausalLM(nn.Module):
-    def __init__(self, lang_model_path, r=8, lora_alpha=16,
+    def __init__(self, lang_model_path, r=16, lora_alpha=32,
                  target_modules=("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"),
                  lora_dropout = 0.1, bias="none",  task_type="CAUSAL_LM"):
         super(MultiLLaMAForCausalLM, self).__init__()
@@ -49,8 +49,12 @@ class MultiLLaMAForCausalLM(nn.Module):
             # lang_x = lang_x + torch.zeros(1, dtype=lang_x.dtype, device=lang_x.device, requires_grad=True)
             # vision_x = vision_x + torch.zeros(1, dtype=vision_x.dtype, device=vision_x.device, requires_grad=True) 
             # input_embedding = checkpoint(self.embedding_layer, lang_x, vision_x)
+            print("lang_x",lang_x)
+            print("vision_x",vision_x)
+            print("key_words_query",key_words_query)
             input_embedding,loss_match= self.embedding_layer(lang_x, vision_x,key_words_query)   # ,loss_matching
             output = self.lang_model(inputs_embeds = input_embedding,attention_mask = attention_mask, labels = labels)
+            print("output",output)
             logits = output['logits']
 
             loss_reg = None
