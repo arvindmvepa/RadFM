@@ -154,21 +154,21 @@ class multi_dataset(Dataset):
             # self.data_whole_2D = self.data_whole_2D +  [{'medpix_qa_dataset':i} for i in range(len(medpix_qa_dataset))]
             # print('medpix_qa_dataset loaded')
             
-            pmcvqa_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/pmcvqa_test.csv')
-            self.dataset_reflect['pmcvqa_dataset'] = pmcvqa_dataset
-            self.data_whole_2D = self.data_whole_2D +  [{'pmcvqa_dataset':i} for i in range(len(pmcvqa_dataset))]
-            print('pmcvqa_dataset loaded')
+            # pmcvqa_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/pmcvqa_test.csv')
+            # self.dataset_reflect['pmcvqa_dataset'] = pmcvqa_dataset
+            # self.data_whole_2D = self.data_whole_2D +  [{'pmcvqa_dataset':i} for i in range(len(pmcvqa_dataset))]
+            # print('pmcvqa_dataset loaded')
             
-            casereport_dataset = CaseReport_dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/filtered_case_report_test.csv',    
-                                    img_path = '/home/cs/leijiayu/data/all_images/figures/')
-            self.dataset_reflect['casereport_dataset'] = casereport_dataset
-            self.data_whole_2D = self.data_whole_2D +  [{'casereport_dataset':i} for i in range(len(casereport_dataset))]
-            print('casereport_dataset loaded')
+            # casereport_dataset = CaseReport_dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/filtered_case_report_test.csv',    
+            #                         img_path = '/home/cs/leijiayu/data/all_images/figures/')
+            # self.dataset_reflect['casereport_dataset'] = casereport_dataset
+            # self.data_whole_2D = self.data_whole_2D +  [{'casereport_dataset':i} for i in range(len(casereport_dataset))]
+            # print('casereport_dataset loaded')
             
-            vqarad_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/vqarad_test.csv')
-            self.dataset_reflect['vqarad_dataset'] = vqarad_dataset
-            self.data_whole_2D = self.data_whole_2D +  [{'vqarad_dataset':i} for i in range(len(vqarad_dataset))]
-            print('vqarad_dataset loaded')
+            # vqarad_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/vqarad_test.csv')
+            # self.dataset_reflect['vqarad_dataset'] = vqarad_dataset
+            # self.data_whole_2D = self.data_whole_2D +  [{'vqarad_dataset':i} for i in range(len(vqarad_dataset))]
+            # print('vqarad_dataset loaded')
             
             slake_dataset = VQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/slakevqa_test.csv')
             self.dataset_reflect['slake_dataset'] = slake_dataset
@@ -176,10 +176,10 @@ class multi_dataset(Dataset):
             print('slake_dataset loaded')
             
             ## 3D
-            radiovqa_dataset = RadioVQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/radiology_vqa_test.csv')
-            self.dataset_reflect['radiovqa_dataset'] = radiovqa_dataset
-            self.data_whole_3D = self.data_whole_3D +  [{'radiovqa_dataset':i} for i in range(len(radiovqa_dataset))]
-            print('radiovqa_dataset loaded')
+            # radiovqa_dataset = RadioVQA_Dataset(csv_path = '/local2/acc/NKG/RadFM/data_csv/radiology_vqa_test.csv')
+            # self.dataset_reflect['radiovqa_dataset'] = radiovqa_dataset
+            # self.data_whole_3D = self.data_whole_3D +  [{'radiovqa_dataset':i} for i in range(len(radiovqa_dataset))]
+            # print('radiovqa_dataset loaded')
         
         if self.test_split == 'caption':
             ## open ###
