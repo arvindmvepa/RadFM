@@ -482,9 +482,9 @@ class Trainer:
         self.place_model_on_device = args.place_model_on_device
         if (
             self.is_model_parallel
-            or args.deepspeed
-            or ((args.fp16_full_eval or args.bf16_full_eval) and not args.do_train)
-            or (self.sharded_ddp in [ShardedDDPOption.ZERO_DP_2, ShardedDDPOption.ZERO_DP_3])
+            #or args.deepspeed
+            #or ((args.fp16_full_eval or args.bf16_full_eval) and not args.do_train)
+            #or (self.sharded_ddp in [ShardedDDPOption.ZERO_DP_2, ShardedDDPOption.ZERO_DP_3])
             or (self.fsdp is not None)
         ):
             self.place_model_on_device = False
@@ -529,19 +529,19 @@ class Trainer:
                     " `Trainer`. Make sure the lines `import torch_xla.core.xla_model as xm` and"
                     " `model.to(xm.xla_device())` is performed before the optimizer creation in your script."
                 )
-        if ((self.sharded_ddp is not None) or args.deepspeed or (self.fsdp is not None)) and (
+        if ((self.sharded_ddp is not None) or (self.fsdp is not None)) and (
             self.optimizer is not None or self.lr_scheduler is not None
         ):
             raise RuntimeError(
                 "Passing `optimizers` is not allowed if Fairscale, Deepspeed or PyTorch FSDP is enabled."
                 "You should subclass `Trainer` and override the `create_optimizer_and_scheduler` method."
             )
-        default_callbacks = DEFAULT_CALLBACKS + get_reporting_integration_callbacks(self.args.report_to)
+        default_callbacks = DEFAULT_CALLBACKS #+ get_reporting_integration_callbacks(self.args.report_to)
         callbacks = default_callbacks if callbacks is None else default_callbacks + callbacks
         self.callback_handler = CallbackHandler(
             callbacks, self.model, self.tokenizer, self.optimizer, self.lr_scheduler
         )
-        self.add_callback(PrinterCallback if self.args.disable_tqdm else DEFAULT_PROGRESS_CALLBACK)
+        self.add_callback(DEFAULT_PROGRESS_CALLBACK)
 
         # Will be set to True by `self._setup_loggers()` on first call to `self.log()`.
         self._loggers_initialized = False
@@ -2811,9 +2811,10 @@ class Trainer:
                 # 'user_content.pt' indicates model state_dict saved with smp >= 1.10
                 Path(os.path.join(output_dir, "user_content.pt")).touch()
         elif (
-            ShardedDDPOption.ZERO_DP_2 in self.args.sharded_ddp
-            or ShardedDDPOption.ZERO_DP_3 in self.args.sharded_ddp
-            or self.fsdp is not None
+            #ShardedDDPOption.ZERO_DP_2 in self.args.sharded_ddp
+            #or ShardedDDPOption.ZERO_DP_3 in self.args.sharded_ddp
+            #or
+            self.fsdp is not None
         ):
             state_dict = self.model.state_dict()
 
