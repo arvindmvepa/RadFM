@@ -19,7 +19,7 @@ class MultiLLaMAForCausalLM(nn.Module):
             model_class = LlavaLlamaForCausalLM
         else:
             model_class = AutoModelForCausalLM
-        self.lang_model = model_class.from_pretrained(lang_model_path, use_auth_token=True)
+        self.lang_model = model_class.from_pretrained(lang_model_path, use_auth_token=True, trust_remote_code=True)
         self.lang_model.gradient_checkpointing_enable()
         self.lang_model.enable_input_require_grads()
         # self.lang_model.requires_grad_(False)
