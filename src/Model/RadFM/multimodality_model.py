@@ -10,8 +10,13 @@ from torch.autograd import Variable
 import numpy as np
 class MultiLLaMAForCausalLM(nn.Module):
     def __init__(self, lang_model_path):  
-        super(MultiLLaMAForCausalLM, self).__init__()  
-        self.lang_model = LlamaForCausalLM.from_pretrained(lang_model_path, use_auth_token=True)
+        super(MultiLLaMAForCausalLM, self).__init__()
+        if "llava" in model_name:
+            from llava.model import LlavaLlamaForCausalLM
+            model_class = LlavaLlamaForCausalLM
+        else:
+            model_class = AutoModelForCausalLM
+        self.lang_model = model_class.from_pretrained(lang_model_path, use_auth_token=True)
         self.lang_model.gradient_checkpointing_enable()
         self.lang_model.enable_input_require_grads()
         # self.lang_model.requires_grad_(False)
