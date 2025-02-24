@@ -1886,9 +1886,11 @@ class Trainer:
         for epoch in range(epochs_trained, num_train_epochs):
             ### 吴超逸加 ###
             if isinstance(train_dataloader, DataLoader) and (isinstance(train_dataloader.sampler, DistributedSampler) or self.args.data_sampler != None):
-                train_dataloader.sampler.set_epoch(epoch)
+                #train_dataloader.sampler.set_epoch(epoch)
+                pass
             elif hasattr(train_dataloader, "dataset") and (isinstance(train_dataloader.sampler, DistributedSampler) or self.args.data_sampler != None):
-                train_dataloader.dataset.set_epoch(epoch)
+                #train_dataloader.dataset.set_epoch(epoch)
+                pass
 
             if is_torch_tpu_available():
                 parallel_loader = pl.ParallelLoader(train_dataloader, [args.device]).per_device_loader(args.device)

@@ -195,7 +195,7 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
         return len(self.data)
 
     def __getitem__(self, index):
-        data = self.data[idx]
+        data = self.data[index]
         image = self.prepare_image(data)
         answer = data['answer']
         question = data['question']
