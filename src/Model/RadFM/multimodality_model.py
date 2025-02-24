@@ -40,7 +40,7 @@ class MultiLLaMAForCausalLM(nn.Module):
         self.embedding_layer = MyEmbedding()
         self.embedding_layer.weight = self.lang_model.get_input_embeddings().weight
         self.hidden_dim = 3072
-        self.voc_size = 16384704
+        self.voc_size = 32064
         
     def forward(self,lang_x, vision_x, attention_mask, labels, loss_reweight,key_words_query):
         if labels.shape == lang_x.shape:
@@ -51,24 +51,21 @@ class MultiLLaMAForCausalLM(nn.Module):
             # input_embedding = checkpoint(self.embedding_layer, lang_x, vision_x)
             input_embedding,loss_match= self.embedding_layer(lang_x, vision_x,key_words_query)   # ,loss_matching
             output = self.lang_model(inputs_embeds = input_embedding,attention_mask = attention_mask, labels = labels)
+            # TODO: the output here is only one dimension
             logits = output['logits']
 
             loss_reg = None
             if labels is not None:
-                # Shift so that tokens < n predict n
-                shift_logits = logits[..., :-1, :].contiguous()
-                shift_labels = labels[..., 1:].contiguous()
-                shift_loss_reweight = loss_reweight[...,1:].contiguous()
-                # Flatten the tokens
-                loss_fct = CrossEntropyLoss(reduction = 'none')
-                shift_logits = shift_logits.view(-1, self.voc_size)
+                shift_logits = logits[..., :-1, :].contiguous()  # shape [B, seq_len-1, vocab_size]
+                shift_labels = labels[..., 1:].contiguous()  # shape [B, seq_len-1]
+                # Flatten across the batch and sequence-length dims
+                shift_logits = shift_logits.view(-1, shift_logits.size(-1))
                 shift_labels = shift_labels.view(-1)
                 shift_loss_reweight = shift_loss_reweight.view(-1)
+                loss_fct = CrossEntropyLoss(reduction = 'none')
                 # Enable model parallelism
                 shift_labels = shift_labels.to(shift_logits.device)
                 shift_loss_reweight = shift_loss_reweight.to(shift_logits.device)
-                print("shift_logits.shape,shift_labels.shape,shift_loss_reweight.shape")
-                print(shift_logits.shape,shift_labels.shape,shift_loss_reweight.shape)
                 loss_reg = loss_fct(shift_logits, shift_labels)
                 loss_reg = torch.sum(shift_loss_reweight*loss_reg)/torch.sum(shift_loss_reweight)
             loss = loss_reg
