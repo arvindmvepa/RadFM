@@ -11,7 +11,7 @@ import numpy as np
 class MultiLLaMAForCausalLM(nn.Module):
     def __init__(self, lang_model_path):  
         super(MultiLLaMAForCausalLM, self).__init__()
-        if "llava" in model_name:
+        if "llava" in lang_model_path:
             from llava.model import LlavaLlamaForCausalLM
             model_class = LlavaLlamaForCausalLM
         else:
