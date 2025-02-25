@@ -2379,7 +2379,7 @@ class Trainer:
             self.deepspeed.save_checkpoint(output_dir)
 
         # Save optimizer and scheduler
-        if self.sharded_ddp == ShardedDDPOption.SIMPLE:
+        if (self.sharded_ddp is not None) and (self.sharded_dd == ShardedDDPOption.SIMPLE):
             self.optimizer.consolidate_state_dict()
 
         if is_torch_tpu_available():
