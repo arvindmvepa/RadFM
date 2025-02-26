@@ -127,7 +127,7 @@ def main():
     model.load_state_dict(ckpt,strict=False)
     model = model.to('cuda')
     model.eval() 
-    with open(os.path.join(training_args.output_dir, test_file_basename, '.test.csv'), mode='w') as outfile:
+    with open(os.path.join(training_args.output_dir, test_file_basename + '.test.csv'), mode='w') as outfile:
         writer = csv.writer(outfile)
         writer.writerow(["Question", "Ground Truth","Pred",'belong_to'])
         cc = 0
