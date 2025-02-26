@@ -122,7 +122,7 @@ def main():
     model = MultiLLaMAForCausalLM(
         lang_model_path=model_args.lang_encoder_path,
     )
-    ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin', map_location ='cpu')
+    ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin')
     # ckpt.pop('embedding_layer.figure_token_weight')
     model.load_state_dict(ckpt,strict=False)
     model = model.to('cuda')
