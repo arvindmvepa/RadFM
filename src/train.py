@@ -105,8 +105,8 @@ def main():
     training_args.data_sampler = My_DistributedBatchSampler
     
     print("Setup Data")
-    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, data_path=args.train_data_path)
-    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path, data_path=args.val_data_path)
+    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, data_path=data_args.train_data_path)
+    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path, data_path=data_args.val_data_path)
     print("Setup Model")
 
     model = MultiLLaMAForCausalLM(

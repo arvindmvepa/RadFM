@@ -107,7 +107,7 @@ def main():
     print("Setup Data")
     test_file_basename = os.path.basename(args.test_data_path)
     Test_dataset = multi_dataset(text_tokenizer=model_args.tokenizer_path, test_split=data_args.test_split,
-                                 data_path=args.test_data_path)
+                                 data_path=data_args.test_data_path)
     
     Test_dataloader = DataLoader(
             Test_dataset,
