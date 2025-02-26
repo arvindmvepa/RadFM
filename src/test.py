@@ -105,7 +105,8 @@ def main():
     print("Setup Data")
     test_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_v3.json'
     test_file_basename = os.path.basename(test_data_path)
-    Test_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, test_split = data_args.test_split, data_path=test_data_path)
+    Test_dataset = multi_dataset(text_tokenizer=model_args.tokenizer_path, test_split=data_args.test_split,
+                                 data_path=test_data_path)
     
     Test_dataloader = DataLoader(
             Test_dataset,
@@ -124,7 +125,7 @@ def main():
     )
     ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin')
     # ckpt.pop('embedding_layer.figure_token_weight')
-    model.load_state_dict(ckpt,strict=False)
+    model.load_state_dict(ckpt, strict=False)
     model = model.to('cuda')
     model.eval() 
     with open(os.path.join(training_args.output_dir, test_file_basename + '.test.csv'), mode='w') as outfile:
@@ -137,17 +138,16 @@ def main():
             belong_to = sample['belong_to']
             # img_pp = sample['img_path']
             lang_x = Test_dataset.text_tokenizer(
-                question, max_length=2048, truncation=True, return_tensors="pt"
+                question, max_length=512, truncation=True, return_tensors="pt"
             )['input_ids'].to('cuda')
             vision_x = sample["vision_x"].to('cuda')
             answer = sample['answer']
             try:
-                generation = model.generate(lang_x,vision_x)
-                generated_texts = Test_dataset.text_tokenizer.batch_decode(generation, skip_special_tokens=True) 
-                writer.writerow([question,answer,generated_texts,belong_to])
-                cc = cc+1
-            # if cc>=10000:
-            #     break
+                with torch.no_grad():
+                    generation = model.generate(lang_x,vision_x)
+                    generated_texts = Test_dataset.text_tokenizer.batch_decode(generation, skip_special_tokens=True)
+                    writer.writerow([question, answer, generated_texts, belong_to])
+                    cc = cc+1
             except:
                 continue
 
