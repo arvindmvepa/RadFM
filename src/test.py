@@ -7,6 +7,7 @@ from My_Trainer.trainer import Trainer
 from dataclasses import dataclass, field
 from Dataset.multi_dataset_test import multi_dataset
 from Model.RadFM.multimodality_model import MultiLLaMAForCausalLM
+
 from datasampler import My_DistributedBatchSampler
 import torch
 from torch.utils.data import DataLoader  
@@ -41,8 +42,7 @@ class TrainingArguments(transformers.TrainingArguments):
     remove_unused_columns: bool = field(default = False)
     batch_size_2D: int = field(default = 4)
     batch_size_3D: int = field(default = 1)
-    # output_dir: Optional[str] = field(default="/home/cs/leijiayu/wuchaoyi/multi_modal/src/Results/BLIP_overfit/")
-    output_dir: Optional[str] = field(default="./Quick_demo")
+    output_dir: Optional[str] = field(default="/local2/amvepa91/RadFM/src/BLIP_overfit/")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
 
@@ -103,7 +103,9 @@ def main():
     
     training_args.data_sampler = My_DistributedBatchSampler
     print("Setup Data")
-    Test_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path,test_split = data_args.test_split)
+    test_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_v3.json'
+    test_file_basename = os.path.basename(test_data_path)
+    Test_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, test_split = data_args.test_split, data_path=test_data_path)
     
     Test_dataloader = DataLoader(
             Test_dataset,
@@ -120,12 +122,12 @@ def main():
     model = MultiLLaMAForCausalLM(
         lang_model_path=model_args.lang_encoder_path,
     )
-    ckpt = torch.load('/home/acc/NKG/RadFM-branch/RadFM/Quick_demo/pytorch_model.bin',map_location ='cpu')
+    ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin', map_location ='cpu')
     # ckpt.pop('embedding_layer.figure_token_weight')
     model.load_state_dict(ckpt,strict=False)
     model = model.to('cuda')
     model.eval() 
-    with open('output_whole_2_epoch' + data_args.test_split+'.csv', mode='w') as outfile:
+    with open(os.path.join(training_args.output_dir, test_file_basename, '.test.csv'), mode='w') as outfile:
         writer = csv.writer(outfile)
         writer.writerow(["Question", "Ground Truth","Pred",'belong_to'])
         cc = 0

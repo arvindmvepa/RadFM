@@ -40,6 +40,8 @@ class TrainingArguments(transformers.TrainingArguments):
     output_dir: Optional[str] = field(default="./BLIP_overfit/")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
+    save_total_limit: int = field(default=1)
+    save_strategy: str = field(default="epoch")
 
 
 @dataclass
@@ -101,8 +103,10 @@ def main():
     training_args.data_sampler = My_DistributedBatchSampler
     
     print("Setup Data")
-    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path)
-    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path)
+    train_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_train_v3.json'
+    val_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_val_v3.json'
+    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, data_path=train_data_path)
+    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path, data_path=val_data_path)
     print("Setup Model")
 
     model = MultiLLaMAForCausalLM(
@@ -114,7 +118,9 @@ def main():
                       eval_dataset=Eval_dataset,
                       args=training_args,
                       data_collator=DataCollator(),
-                      compute_metrics=compute_metrics
+                      compute_metrics=compute_metrics,
+                      save_total_limit=1,
+                      save_strategy="epoch"
                       )
 
     trainer.train()
