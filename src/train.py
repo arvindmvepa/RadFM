@@ -118,9 +118,7 @@ def main():
                       eval_dataset=Eval_dataset,
                       args=training_args,
                       data_collator=DataCollator(),
-                      compute_metrics=compute_metrics,
-                      save_total_limit=1,
-                      save_strategy="epoch"
+                      compute_metrics=compute_metrics
                       )
 
     trainer.train()
