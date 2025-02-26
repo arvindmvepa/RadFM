@@ -123,11 +123,11 @@ def main():
     model = MultiLLaMAForCausalLM(
         lang_model_path=model_args.lang_encoder_path,
     )
-    ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin')
-    # ckpt.pop('embedding_layer.figure_token_weight')
-    model.load_state_dict(ckpt, strict=False)
-    model = model.to('cuda')
-    model.eval() 
+    ckpt = torch.load('/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin',
+                      map_location='cpu')  # Load to CPU first
+    model.load_state_dict(ckpt, strict=False)  # Load weights
+    model.to('cuda')  # Move model to GPU
+    model.eval()  # Set to evaluation mode
     with open(os.path.join(training_args.output_dir, test_file_basename + '.test.csv'), mode='w') as outfile:
         writer = csv.writer(outfile)
         writer.writerow(["Question", "Ground Truth","Pred",'belong_to'])
