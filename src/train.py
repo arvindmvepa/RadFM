@@ -31,13 +31,15 @@ class ModelArguments:
 @dataclass
 class DataArguments:
     Mode: Optional[str] = field(default="Train")
+    train_data_path: Optional[str] = field(default='/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_train_v3.json')
+    val_data_path: Optional[str] = field(default='/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_val_v3.json')
     
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):
     remove_unused_columns: bool = field(default = False)
     batch_size_2D: int = field(default = 4)
     batch_size_3D: int = field(default = 1)
-    output_dir: Optional[str] = field(default="./BLIP_overfit/")
+    output_dir: Optional[str] = field(default="./gli_run")
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
     save_total_limit: int = field(default=1)
@@ -103,10 +105,8 @@ def main():
     training_args.data_sampler = My_DistributedBatchSampler
     
     print("Setup Data")
-    train_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_train_v3.json'
-    val_data_path = '/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_val_v3.json'
-    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, data_path=train_data_path)
-    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path, data_path=val_data_path)
+    Train_dataset = multi_dataset(text_tokenizer = model_args.tokenizer_path, data_path=args.train_data_path)
+    Eval_dataset = multi_dataset_close(text_tokenizer = model_args.tokenizer_path, data_path=args.val_data_path)
     print("Setup Model")
 
     model = MultiLLaMAForCausalLM(
