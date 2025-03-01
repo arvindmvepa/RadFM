@@ -46,14 +46,16 @@ if __name__ == "__main__":
                   ("/local2/amvepa91/RadFM/src/goat_run/brats_goat_3d_vqa_subjTrue_test_v1.json.test.csv",
                    "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_v1.json")]
     for pred_file, gt_file in pred_gt_files:
+        print("Cleaning predictions in", pred_file)
         df = pd.read_csv(pred_file)
         df['Clean Pred'] = df['Pred'].apply(clean_prediction)
         new_file = pred_file.replace(".csv", "_clean.csv")
         df.to_csv(new_file, index=False)
         with open(gt_file, "r") as f:
             gt_data = json.load(f)
+        print("length of csv: ", len(df), "length of gt: ", len(gt_data))
         for (_, row), gt_datum in zip(df.iterrows(), gt_data):
             gt_datum['model_answer'] = row['Clean Pred']
         with open(pred_file.replace(".csv", ".json"), "w") as f:
-            json.dump(gt_data, f)
+            json.dump(gt_data, f, indent=4)
 
