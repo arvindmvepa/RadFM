@@ -10,7 +10,7 @@ def clean_prediction(predicted_text: str) -> str:
     is just a repeated chunk.
     """
     # Remove surrounding brackets if present:
-    predicted_text = predicted_text.strip("[]").strip()
+    predicted_text = predicted_text.strip("[']").strip()
 
     # Split into tokens:
     tokens = predicted_text.split()
