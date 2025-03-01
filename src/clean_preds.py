@@ -21,14 +21,18 @@ def clean_prediction(predicted_text: str) -> str:
     # Attempt to detect the smallest repeated chunk
     length = len(tokens)
     for n in range(1, length + 1):
-        # Only consider n that divides the total number of tokens
-        if length % n == 0:
-            chunk = tokens[:n]
-            # Recreate the tokens from repeated chunk
-            if chunk * (length // n) == tokens:
-                # Found a repeated chunk pattern
-                return " ".join(chunk)
-
+        chunk = tokens[:n]
+        next_chunk = tokens[n:2*n]
+        # if repeated pattern is found in the beginning, return initial chunk
+        if chunk == next_chunk:
+            return " ".join(chunk)
+        # if repeated pattern is found after the beginning, return initial subchunk
+        else:
+            for j in range(1, n):
+                sub_chunk = tokens[j:n]
+                next_sub_chunk = tokens[n:2*n-j]
+                if sub_chunk == next_sub_chunk:
+                    return " ".join(chunk[:j])
     # If no repeated pattern is found, return the original text
     return predicted_text
 
