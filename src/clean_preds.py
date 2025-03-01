@@ -52,7 +52,7 @@ if __name__ == "__main__":
         df.to_csv(new_file, index=False)
         with open(gt_file, "r") as f:
             gt_data = json.load(f)
-        for row, gt_datum in zip(df.itterrows(), gt_data):
+        for row, gt_datum in zip(df.iterrows(), gt_data):
             gt_datum['model_answer'] = row['Clean Pred']
         with open(pred_file.replace(".csv", ".json"), "w") as f:
             json.dump(gt_data, f)
