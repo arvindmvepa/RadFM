@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 
 # -----------------------------------------------------
@@ -38,11 +39,21 @@ def clean_prediction(predicted_text: str) -> str:
 
 
 if __name__ == "__main__":
-    pred_files = ["/local2/amvepa91/RadFM/src/gli_run/brats_gli_3d_vqa_subjTrue_test_v3.json.test.csv",
-                  "/local2/amvepa91/RadFM/src/met_run/brats_met_3d_vqa_subjTrue_test_v1.json.test.csv",
-                  "/local2/amvepa91/RadFM/src/goat_run/brats_goat_3d_vqa_subjTrue_test_v1.json.test.csv"]
-    for pred_file in pred_files:
+    pred_gt_files = [("/local2/amvepa91/RadFM/src/gli_run/brats_gli_3d_vqa_subjTrue_test_v3.json.test.csv",
+                   "/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_v3.json"),
+                  ("/local2/amvepa91/RadFM/src/met_run/brats_met_3d_vqa_subjTrue_test_v1.json.test.csv",
+                   "/local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_v1.json"),
+                  ("/local2/amvepa91/RadFM/src/goat_run/brats_goat_3d_vqa_subjTrue_test_v1.json.test.csv",
+                   "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_v1.json")]
+    for pred_file, gt_file in pred_gt_files:
         df = pd.read_csv(pred_file)
         df['Clean Pred'] = df['Pred'].apply(clean_prediction)
         new_file = pred_file.replace(".csv", "_clean.csv")
         df.to_csv(new_file, index=False)
+        with open(gt_file, "r") as f:
+            gt_data = json.load(f)
+        for row, gt_datum in zip(df.itterrows(), gt_data):
+            gt_datum['model_answer'] = row['Clean Pred']
+        with open(pred_file.replace(".csv", ".json"), "w") as f:
+            json.dump(gt_data, f)
+
