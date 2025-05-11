@@ -186,10 +186,10 @@ class RadioVQA_Dataset(Dataset):
 
 class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
 
-    def __init__(self, data_path, included_modality="t1c"):
-
+    def __init__(self, data_path, included_modality=["t1c", "t1n", "t2w", "t2f"]):
         self.data = self.get_question_data(data_path)
         self.included_modality = included_modality
+        print("Loading Brats3D_RadioVQA_Dataset with these modalities : ", self.included_modality)
 
     def __len__(self):
         return len(self.data)
@@ -214,14 +214,28 @@ class Brats3D_RadioVQA_Dataset(RadioVQA_Dataset):
             }
 
     def prepare_image(self, data):
-        image_abs_path = data["volume_non_seg_files"][self.included_modality]
-        new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
-        image = np.load(new_image_abs_path)
-        image = (image-image.min())/(image.max()-image.min())
-        c, d, h, w = image.shape
-        image = ndimage.zoom(image, (3/c, 512/h, 512/w, 1), order=0)
-        image = np.transpose(image, (0, 2, 3, 1))
-        image = torch.from_numpy(image).float()
+        if isinstance(self.included_modality, str):
+            image_abs_path = data["volume_non_seg_files"][self.included_modality]
+            new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
+            image = np.load(new_image_abs_path)
+            image = (image-image.min())/(image.max()-image.min())
+            c, d, h, w = image.shape
+            image = ndimage.zoom(image, (3/c, 512/h, 512/w, 1), order=0)
+            image = np.transpose(image, (0, 2, 3, 1))
+            image = torch.from_numpy(image).float()
+        elif isinstance(self.included_modality, list):
+            images = []
+            for modality in self.included_modality:
+                image_abs_path = data["volume_non_seg_files"][modality]
+                new_image_abs_path = self.convert_file_path_to_npy(image_abs_path)
+                image = np.load(new_image_abs_path)
+                images.append(image)
+            image = np.concatenate(images, axis=0)
+            image = (image-image.min())/(image.max()-image.min())
+            c, d, h, w = image.shape
+            image = ndimage.zoom(image, (3/c, 512/h, 512/w, 1), order=0)
+            image = np.transpose(image, (0, 2, 3, 1))
+            image = torch.from_numpy(image).float()
         return image
 
     def convert_file_path_to_npy(self, image_abs_path):
