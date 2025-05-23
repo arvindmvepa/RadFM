@@ -28,16 +28,14 @@ setup_seed(20)
 class ModelArguments:
     lang_encoder_path: Optional[str] = field(default="microsoft/Phi-3-mini-4k-instruct")
     tokenizer_path: str = field(default='microsoft/Phi-3-mini-4k-instruct', metadata={"help": "Path to the tokenizer data."})
-    model_path: str = field(default='/local2/amvepa91/RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin', metadata={"help": "Path to the model."})
-    # tokenizer_path: str = field(default='/home/cs/leijiayu/wuchaoyi/Finetune_LLAMA/LLAMA_Model/tokenizer', metadata={"help": "Path to the tokenizer data."})
-    #vision_encoder_path: str = field(default='/home/cs/leijiayu/wuchaoyi/multi_modal/src/PMC-CLIP/checkpoint.pt', metadata={"help": "Path to the vision_encoder."})   
+    model_path: str = field(default='RadFM/src/BLIP_overfit/checkpoint-25500/pytorch_model.bin', metadata={"help": "Path to the model."})
     
 
 @dataclass
 class DataArguments:
     Mode: Optional[str] = field(default="Train")
     test_split: Optional[str] = field(default="vqa")
-    test_data_path: Optional[str] = field(default='/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_v3.json')
+    test_data_path: Optional[str] = field(default='brats_gli_3d_vqa_subjTrue_test_v3.json')
     
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):

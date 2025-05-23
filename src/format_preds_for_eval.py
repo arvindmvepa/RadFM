@@ -39,13 +39,8 @@ def clean_prediction(predicted_text: str) -> str:
 
 
 if __name__ == "__main__":
-    pred_gt_files = [("/local2/amvepa91/RadFM/src/goat_new_dataset_v3_run/brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json.test.csv",
-                      "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json"),
-                     #("/local2/amvepa91/RadFM/src/met_run/brats_met_3d_vqa_subjTrue_test_v1.json.test.csv",
-                   #"/local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_v1.json"),
-                  #("/local2/amvepa91/RadFM/src/goat_run/brats_goat_3d_vqa_subjTrue_test_v1.json.test.csv",
-                   #"/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_v1.json")
-                     ]
+    pred_gt_files = [("RadFM/src/goat_new_dataset_v3_run/brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json.test.csv",
+                      "brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json")]
     for pred_file, gt_file in pred_gt_files:
         print("Cleaning predictions in", pred_file)
         df = pd.read_csv(pred_file)

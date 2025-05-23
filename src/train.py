@@ -31,8 +31,8 @@ class ModelArguments:
 @dataclass
 class DataArguments:
     Mode: Optional[str] = field(default="Train")
-    train_data_path: Optional[str] = field(default='/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_train_v3.json')
-    val_data_path: Optional[str] = field(default='/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_val_v3.json')
+    train_data_path: Optional[str] = field(default='brats_gli_3d_vqa_subjTrue_train_v3.json')
+    val_data_path: Optional[str] = field(default='brats_gli_3d_vqa_subjTrue_val_v3.json')
     
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):

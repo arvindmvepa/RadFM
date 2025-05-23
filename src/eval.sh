@@ -1,14 +1,16 @@
 #!/bin/bash
 
+PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
+--model_path RadFM/src/gli_new_dataset_multimodal_run/checkpoint-93312/pytorch_model.bin \
+--test_data_path brats_gli_3d_vqa_subjTrue_test_updated_v2_seed0_multitask_fixed.json \
+--output_dir ./gli_new_dataset_multimodal_run
 
 PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
---model_path /local2/amvepa91/RadFM/src/gli_run/checkpoint-62208/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_v3.json --output_dir ./gli_run
+--model_path RadFM/src/met_new_dataset_v3_run/checkpoint-27270/pytorch_model.bin \
+--test_data_path brats_met_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json \
+--output_dir ./met_new_dataset_v3_run
 
 PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
---model_path /local2/amvepa91/RadFM/src/met_run/checkpoint-18180/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_v1.json --output_dir ./met_run
-
-PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
---model_path /local2/amvepa91/RadFM/src/goat_run/checkpoint-38880/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_v1.json --output_dir ./goat_run
+--model_path RadFM/src/goat_new_dataset_v3_run/checkpoint-38880/pytorch_model.bin \
+--test_data_path brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json \
+--output_dir ./goat_new_dataset_v3_run
