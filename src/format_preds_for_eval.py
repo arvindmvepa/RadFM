@@ -46,6 +46,9 @@ if __name__ == "__main__":
                       ("/local2/amvepa91/RadFM/src/goat_new_dataset_v11_run/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json.test.csv",
                       "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json")]
     for pred_file, gt_file in pred_gt_files:
+        print("Cleaning predictions in", pred_file)
+        df = pd.read_csv(pred_file)
+        df['Clean Pred'] = df['Pred'].apply(clean_prediction)
         new_file = pred_file.replace(".csv", "_clean.csv")
         df.to_csv(new_file, index=False)
         with open(gt_file, "r") as f:
