@@ -39,17 +39,12 @@ def clean_prediction(predicted_text: str) -> str:
 
 
 if __name__ == "__main__":
-    pred_gt_files = [("/local2/amvepa91/RadFM/src/goat_new_dataset_v3_run/brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json.test.csv",
-                      "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v3_seed0_multitask_fixed.json"),
-                     #("/local2/amvepa91/RadFM/src/met_run/brats_met_3d_vqa_subjTrue_test_v1.json.test.csv",
-                   #"/local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_v1.json"),
-                  #("/local2/amvepa91/RadFM/src/goat_run/brats_goat_3d_vqa_subjTrue_test_v1.json.test.csv",
-                   #"/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_v1.json")
-                     ]
-    for pred_file, gt_file in pred_gt_files:
-        print("Cleaning predictions in", pred_file)
-        df = pd.read_csv(pred_file)
-        df['Clean Pred'] = df['Pred'].apply(clean_prediction)
+    pred_gt_files = [("/local2/amvepa91/RadFM/src/gli_new_dataset_v11_run/brats_gli_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json.test.csv",
+                      "/local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json"),
+                      ("/local2/amvepa91/RadFM/src/met_new_dataset_v11_run/brats_met_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json.test.csv",
+                      "/local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json"),
+                      ("/local2/amvepa91/RadFM/src/goat_new_dataset_v11_run/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json.test.csv",
+                      "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json")]
         new_file = pred_file.replace(".csv", "_clean.csv")
         df.to_csv(new_file, index=False)
         with open(gt_file, "r") as f:
