@@ -45,13 +45,13 @@ if __name__ == "__main__":
                       "/local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json"),
                       ("/local2/amvepa91/RadFM/src/goat_new_dataset_v11_run/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json.test.csv",
                       "/local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json")]
-        new_file = pred_file.replace(".csv", "_clean.csv")
-        df.to_csv(new_file, index=False)
-        with open(gt_file, "r") as f:
-            gt_data = json.load(f)
-        print("length of csv: ", len(df), "length of gt: ", len(gt_data))
-        for (_, row), gt_datum in zip(df.iterrows(), gt_data):
-            gt_datum['model_answer'] = row['Clean Pred']
-        with open(pred_file.replace(".csv", ".json"), "w") as f:
-            json.dump(gt_data, f, indent=4)
+    new_file = pred_file.replace(".csv", "_clean.csv")
+    df.to_csv(new_file, index=False)
+    with open(gt_file, "r") as f:
+        gt_data = json.load(f)
+    print("length of csv: ", len(df), "length of gt: ", len(gt_data))
+    for (_, row), gt_datum in zip(df.iterrows(), gt_data):
+        gt_datum['model_answer'] = row['Clean Pred']
+    with open(pred_file.replace(".csv", ".json"), "w") as f:
+        json.dump(gt_data, f, indent=4)
 
