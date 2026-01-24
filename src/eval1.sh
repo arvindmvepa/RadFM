@@ -2,15 +2,15 @@
 
 PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
 --model_path /local2/amvepa91/RadFM/src/gli_new_dataset_v11_run/checkpoint-93312/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json \
+--test_data_path /local2/amvepa91/MedTrinity-25M/brats_gli_3d_vqa_subjTrue_test_updated_v11_seed0_filt_multitask_fixed.json \
 --output_dir ./gli_new_dataset_v11_run
 
 PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
 --model_path /local2/amvepa91/RadFM/src/met_new_dataset_v11_run/checkpoint-27270/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json \
+--test_data_path /local2/amvepa91/MedTrinity-25M/brats_met_3d_vqa_subjTrue_test_updated_v11_seed0_filt_multitask_fixed.json \
 --output_dir ./met_new_dataset_v11_run
 
 PYTHONPATH=. CUDA_VISIBLE_DEVICES=$1 python test.py \
 --model_path /local2/amvepa91/RadFM/src/goat_new_dataset_v11_run/checkpoint-58320/pytorch_model.bin \
---test_data_path /local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_multitask_fixed.json \
+--test_data_path /local2/amvepa91/MedTrinity-25M/brats_goat_3d_vqa_subjTrue_test_updated_v11_seed0_filt_multitask_fixed.json \
 --output_dir ./goat_new_dataset_v11_run
